@@ -1,28 +1,36 @@
 from espn_api.football import League
-import tkinter as tk
-from tkinter import simpledialog, messagebox
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
 
 def analyze(league, team):
     current_week = league.current_week
 
 
+@app.route("/", methods=["GET", "POST"])
+def index():
+    result = ""
+    error = ""
+    if request.method == "POST":
+        league_id = int(request.form["league_id"])
+        league_year = int(request.form["league_year"])
+        espn_s2 = request.form["espn_s2"]
+        swid = request.form["swid"]
 
-def main():
-    league_id = input("Please input ESPN Fantasy League ID: ")
-    league_year = input("Fantasy League Year: ")
-    espn_s2 = input("Paste espn_s2 Cookie: ")
-    SWID = input("Paste user SWID (including curly braces): ")
+        my_league = League(league_id=int(league_id), year=int(league_year), espn_s2=espn_s2, swid=swid)
 
-    my_league = League(league_id=int(league_id), year=int(league_year), espn_s2=espn_s2, swid=SWID)
-    print("League Found!")
-    name = input("Please input the name of the team you want to analyze (case-sensitive): ")
+        name = request.form["team_name"]
 
-    team_names = [team.team_name for team in my_league.teams]
-    stripped_names = [name.strip() for name in team_names]
-    try:
-        team_index = stripped_names.index(name)
-    except ValueError:
-        print("ERROR: entered team name not found in league")
+        team_names = [team.team_name for team in my_league.teams]
+        stripped_names = [name.strip() for name in team_names]
+        try:
+            team_index = stripped_names.index(name)
+            team = my_league.teams[team_index]
+            result = f"Team '{team.team_name}' found!"
+        except ValueError:
+            error = "ERROR: entered team name not found in league"
+    return render_template("index.html", result=result, error=error)
 
-    analyze(my_league, my_league.teams[team_index])
 
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080, debug=True)

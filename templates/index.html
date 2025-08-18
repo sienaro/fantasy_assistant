@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fantasy Football Team Analysis</title>
+    </head>
+    <body>
+        <h1>Fantasy Football League Checker</h1>
+
+        {% if error %}
+            <p style="color:red;">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST">
+            League ID:<br>
+            <input type="text" name="league_id" required><br><br>
+
+            League Year:<br>
+            <input type="text" name="league_year" required><br><br>
+
+            espn_s2 Cookie:<br>
+            <input type="text" name="espn_s2" required><br><br>
+
+            SWID (with braces):<br>
+            <input type="text" name="swid" required><br><br>
+
+            Team Name:<br>
+            <input type="text" name="team_name" required><br><br>
+
+            <button type="submit">Check Team</button>
+        </form>
+
+        {% if result %}
+            <h2>Result:</h2>
+            <p>{{ result }}</p>
+        {% endif %}
+    </body>
+</html>
