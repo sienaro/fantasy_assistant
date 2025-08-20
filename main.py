@@ -12,8 +12,13 @@ BYE_WEEKS = {
     "MIN": 6, "ATL": 5, "CAR": 14, "NO": 11, "TB": 9, "ARI": 8, 
     "LAR": 8, "SF": 14, "SEA": 8 
 }
-def analyze(league, team):
-    current_week = league.current_week
+
+def message(team, current_week):
+    owner = team.owners[0]
+    owner_name = owner.get("lastName", "!")
+    return f"Welcome Coach {owner_name}! Here is your team data for week {current_week}."
+
+def analyze(league, team, current_week):
     eligible_players = []
     ineligible_players = []
     roster = []
@@ -74,12 +79,12 @@ def analyze(league, team):
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    result = ""
     error = ""
     roster = []
     warnings = []
     bench = []
     ineligible = []
+    welcome = ""
 
     if request.method == "POST":
         league_id = int(request.form["league_id"])
@@ -95,11 +100,12 @@ def index():
         try:
             team_index = stripped_names.index(name)
             my_team = my_league.teams[team_index]
-            result = f"Team '{my_team.team_name}' found!"
-            roster, warnings, bench, ineligible = analyze(my_league, my_team)
+            current_week = my_league.current_week
+            welcome = message(my_team, current_week)
+            roster, warnings, bench, ineligible = analyze(my_league, my_team, current_week)
         except ValueError:
             error = "ERROR: entered team name not found in league"
-    return render_template("index.html", result=result, error=error, roster=roster, warnings=warnings, bench=bench, ineligible=ineligible)
+    return render_template("index.html", welcome=welcome, error=error, roster=roster, warnings=warnings, bench=bench, ineligible=ineligible)
 
 
 if __name__ == "__main__":
