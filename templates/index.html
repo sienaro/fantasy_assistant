@@ -4,23 +4,20 @@
         <title>Fantasy Football Team Analysis</title>
     </head>
     <body>
-        <h1>Fantasy Football League Checker</h1>
+        <h1>Fantasy Football Team Analysis</h1>
 
         {% if error %}
             <p style="color:red;">{{ error }}</p>
         {% endif %}
 
         <form method="POST">
-            League ID:<br>
+            ESPN Fantasy League ID:<br>
             <input type="text" name="league_id" required><br><br>
 
-            League Year:<br>
-            <input type="text" name="league_year" required><br><br>
-
-            espn_s2 Cookie:<br>
+            Paste espn_s2 Cookie:<br>
             <input type="text" name="espn_s2" required><br><br>
 
-            SWID (with braces):<br>
+            Paste SWID (including curly braces):<br>
             <input type="text" name="swid" required><br><br>
 
             Team Name:<br>
@@ -30,8 +27,47 @@
         </form>
 
         {% if result %}
-            <h2>Result:</h2>
-            <p>{{ result }}</p>
+            <p><strong>{{ result|safe }}</strong></p>
         {% endif %}
+
+        {% if error %}
+            <p style="color:red">{{ error }}</p>
+        {% endif %}
+
+        {% if roster %}
+            <h2>Recommended Lineup</h2>
+            <ul>
+                {% for player in roster %}
+                    <li>{{ player.position }} - {{ player.name }} ({{ player.proTeam }}) | Projected: {{ "%.2f"|format(player.weekly_projection) }} pts</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if warnings %}
+            <h2>Warnings</h2>
+            <ul>
+                {% for w in warnings %}
+                    <li>{{ w }}</li>
+                    {% endfor %}
+            </ul>
+        {% endif %} 
+        
+        {% if ineligible %}
+            <h2>Ineligible Players</h2>
+            <ul>
+                {% for i in ineligible %}
+                    <li>{{ i }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %} 
+
+        {% if bench %}
+            <h2>Bench</h2>
+            <ul>
+                {% for b in bench %}
+                     <li>{{ b.position }} - {{ b.name }} ({{ b.proTeam }}) | Projected: {{ "%.2f"|format(b.weekly_projection) }} pts</li>
+                {% endfor %}
+            </ul>
+        {% endif %} 
     </body>
 </html>
