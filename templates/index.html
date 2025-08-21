@@ -1,155 +1,131 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <title>Fantasy Football Team Analysis</title>
-        <link href="https://fonts.googleapis.com/css2?family=WDXL+Lubrifont+TC&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <title>Fantasy Football Team Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=WDXL+Lubrifont+TC&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        h1, h2, h3, .btn { font-family: 'WDXL Lubrifont TC', sans-serif; }
+        body, p, li, label, input, .form-text { font-family: 'Figtree', sans-serif; }
+        body { background-color: #FDF0D5; }
 
+        h1 { color: #ffffff; font-weight: bold; font-size: 3.5rem; text-align: center; margin-top: 20px; margin-bottom: 10px; }
 
-        <style>
-            h1, h2, h3, .btn {
-                font-family: 'WDXL Lubrifont TC', sans-serif;
-            }
+        form {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
 
-            body, p, li, label, input, .form-text {
-                font-family: 'Figtree', sans-serif;
-            }
+        label { font-weight: bold; color: #000000; }
 
-            body {
-                background-color: #FDF0D5; /* light gray background */
-            }
+        .btn-espn {
+            background-color: #669bbc;
+            color: #ffffff;
+            font-weight: bold;
+            border: none;
+        }
 
-            h1 {
-                color: #ffffff; 
-                font-weight: bold;
-                font-size: 3.5rem;
-                text-align: center;
-                margin-top: 20px;
-                margin-bottom: 10px;
-            }
+        .btn-espn:hover {
+            background-color: #003049;
+            color: #ffffff;
+        }
 
-            form {
-                background-color: #ffffff; /* white card */
-                padding: 30px;
-                border-radius: 10px;
-                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            }
+        h2 {
+            color: #000000;
+            border-bottom: 2px solid #cc0000;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
 
-            label {
-                font-weight: bold;
-                color: #000000;
-            }
+        ul {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
 
-            .btn-espn {
-                background-color: #669bbc;
-                color: #ffffff;
-                font-weight: bold;
-                border: none;
-            }
+        li { padding: 5px 0; border-bottom: 1px solid #ddd; }
+        li:last-child { border-bottom: none; }
 
-            .btn-espn:hover {
-                background-color: #003049;
-                color: #ffffff
-            }
+        .error-text { color: #cc0000; font-weight: bold; }
 
-            h2 {
-                color: #000000;
-                border-bottom: 2px solid #cc0000;
-                padding-bottom: 5px;
-                margin-top: 30px;
-             }
+        .header-strip {
+            width: 100%;
+            background-color: #cc0000;
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
 
-            ul {
-                background: #ffffff;
-                padding: 15px;
-                border-radius: 8px;
-                box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-            }
+        .card.form-container { background-color: #cc0000; }
 
-            li {
-                padding: 5px 0;
-                border-bottom: 1px solid #ddd;
-            }
+        .welcome-message {
+            font-family: 'WDXL Lubrifont TC', sans-serif;
+            font-size: 3rem;
+            text-align: left;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-strip">
+        <h1 class="text-center mb-4">ESPN Fantasy Weekly Roster Assistant</h1>
+    </div>
 
-            li:last-child {
-                border-bottom: none;
-            }
-
-            .error-text {
-                color: #cc0000;
-                font-weight: bold;
-            }
-
-            .header-strip {
-                width: 100%;                   /* full width */
-                background-color: #cc0000;     /* ESPN red, or pick another color */
-                padding: 30px 0;               /* top and bottom padding */
-                text-align: center;            /* center the title */
-                box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* optional shadow */
-            }
-            .card.form-container {
-                background-color: #cc0000; /* whatever color you like */
-            }
-
-        </style>
-    </head>
-        <body>
-
-            <div class="header-strip">
-                <h1 class="text-center mb-4">ESPN Fantasy Weekly Roster Assistant</h1>
-            </div>
-
-
-            <div class="container mt-5">
-                <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6">
-                        {% if not welcome or error %}
-                        <div class="card shadow p-4 form-container">
-
-                            {% if error %}
-                                <p class="text-danger">{{ error }}</p>
-                            {% endif %}
-
-                            <form method="POST">
-                                <div class="mb-3">
-                                    <label for="leagueId" class="form-label">League ID</label>
-                                    <input type="text" class="form-control" id="leagueId" name="league_id" required>
-                                    <div class="form-text">Find this in your fantasy league settings</div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="espnS2" class="form-label">espn_s2 Cookie</label>
-                                    <input type="text" class="form-control" id="espnS2" name="espn_s2" required>
-                                    <div class="form-text">Paste the <code>espn_s2</code> value from your ESPN cookies.</div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="swid" class="form-label">SWID</label>
-                                    <input type="text" class="form-control" id="swid" name="swid" required>
-                                    <div class="form-text">Include curly braces (e.g. <code>{ABC123-...}</code>).</div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="teamName" class="form-label">Team Name</label>
-                                    <input type="text" class="form-control" id="teamName" name="team_name" required>
-                                </div>
-
-                                <button type="submit" class="btn btn-espn w-100">Build My Roster</button>
-                            </form>
-                        {% endif %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                {% if not welcome or error %}
+                <div class="card shadow p-4 form-container">
+                    {% if error %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endif %}
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="leagueId" class="form-label">League ID</label>
+                            <input type="text" class="form-control" id="leagueId" name="league_id" required>
+                            <div class="form-text">Find this in your fantasy league settings</div>
                         </div>
-
-                {% if welcome %}
-                    <div class="card shadow mt-4 p-3">
-                        <p><strong>{{ welcome }}</strong></p>
-                    </div>
+                        <div class="mb-3">
+                            <label for="espnS2" class="form-label">espn_s2 Cookie</label>
+                            <input type="text" class="form-control" id="espnS2" name="espn_s2" required>
+                            <div class="form-text">Paste the <code>espn_s2</code> value from your ESPN cookies.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="swid" class="form-label">SWID</label>
+                            <input type="text" class="form-control" id="swid" name="swid" required>
+                            <div class="form-text">Include curly braces (e.g. <code>{ABC123-...}</code>).</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="teamName" class="form-label">Team Name</label>
+                            <input type="text" class="form-control" id="teamName" name="team_name" required>
+                        </div>
+                        <button type="submit" class="btn btn-espn w-100">Build My Roster</button>
+                    </form>
+                </div>
                 {% endif %}
+            </div>
+        </div>
 
-                {% if roster %}
-                    <div class="card shadow mt-4 p-3">
+        {% if welcome %}
+        <div>
+            <h1 class="welcome-message">{{ welcome }}</h1>
+        </div>
+        {% endif %}
+
+        <!-- Side-by-side layout -->
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    {% if roster %}
+                    <div class="card shadow p-3 h-100">
                         <h2>Recommended Lineup</h2>
                         <ul class="list-group">
                             {% for player in roster %}
@@ -160,10 +136,43 @@
                             {% endfor %}
                         </ul>
                     </div>
-                {% endif %}
+                    {% endif %}
+                </div>
 
-                {% if warnings %}
-                    <div class="card shadow mt-4 p-3">
+                <div class="col-md-6 mb-4">
+                    {% if bench %}
+                    <div class="card shadow p-3 h-100">
+                        <h2>Bench</h2>
+                        <ul class="list-group">
+                            {% for b in bench %}
+                                <li class="list-group-item">
+                                    {{ b.position }} - {{ b.name }} ({{ b.proTeam }})
+                                    | Projected: {{ "%.2f"|format(b.weekly_projection) }} pts | {{b.injuryStatus}}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    {% if ineligible %}
+                    <div class="card shadow p-3 h-100">
+                        <h2>Ineligible Players</h2>
+                        <ul class="list-group">
+                            {% for i in ineligible %}
+                                <li class="list-group-item text-danger">{{ i }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    {% if warnings %}
+                    <div class="card shadow p-3 h-100">
                         <h2>Warnings</h2>
                         <ul class="list-group">
                             {% for w in warnings %}
@@ -171,35 +180,10 @@
                             {% endfor %}
                         </ul>
                     </div>
-                {% endif %}
-
-                {% if ineligible %}
-                    <div class="card shadow mt-4 p-3">
-                        <h2>Ineligible Players</h2>
-                        <ul class="list-group">
-                            {% for i in ineligible %}
-                                <li class="list-group-item text-danger">{{ i }}</li>
-                            {% endfor %}
-                         </ul>
-                    </div>
-                {% endif %}
-
-                {% if bench %}
-                <div class="card shadow mt-4 p-3">
-                    <h2>Bench</h2>
-                    <ul class="list-group">
-                    {% for b in bench %}
-                        <li class="list-group-item">
-                            {{ b.position }} - {{ b.name }} ({{ b.proTeam }})
-                            | Projected: {{ "%.2f"|format(b.weekly_projection) }} pts
-                        </li>
-                    {% endfor %}
-                    </ul>
+                    {% endif %}
                 </div>
-
-                {% endif %}
-            </div>
             </div>
         </div>
-    </body>
+    </div>
+</body>
 </html>

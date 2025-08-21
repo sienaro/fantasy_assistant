@@ -75,7 +75,22 @@ def analyze(league, team, current_week):
 
     return roster, warnings, bench, ineligible_players
 
-
+def player_news(team):
+    news_dict = {}
+    for player in team.roster:
+        news = player.news
+        news_dict[player.name] = [{"headline": n['headline'], "link": n['link']} for n in news[:5]]
+    #fetch real time news about players on the roster that might be important
+    return
+def matchup_info(league, team):
+    #return stats on weekly matchup potential, player v players stats, etc.
+    return
+def risk_analysis(team):
+    #data on if current players are performing worse/better than usual, players on bench and roster that may be close in score 
+    return
+def expert_reviews(team):
+    #pulls what the experts are saying each week about whether or not its best to play players or what their pro team mathcup looks like
+    return
 
 @app.route("/", methods=["GET", "POST"])
 def index():
